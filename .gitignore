@@ -1,0 +1,5 @@
+# General
+.vagrant/
+*.log
+kubectl*
+Cluster Setup/configs/
