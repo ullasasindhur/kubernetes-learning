@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  app: svc-test
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetport: 8080
+    nodePort: 30001
+    protocol: TCP
+  selector:
+    chapter: services
