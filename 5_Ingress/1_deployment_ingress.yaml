@@ -1,0 +1,51 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: hydra
+  labels:
+    env: hydra
+spec:
+  containers:
+  - image: nigelpoulton/k8sbook:hydra-ingress
+    name: hydra-ctr
+    ports:
+    - containerPort: 8080
+    imagePullPolicy: Always
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  name: shield
+  labels:
+    env: shield
+spec:
+  containers:
+  - image: nigelpoulton/k8sbook:shield-ingress
+    name: shield-ctr
+    ports:
+    - containerPort: 8080
+    imagePullPolicy: Always
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: shield-svc
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    env: shield
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: hydra-svc
+spec:
+  type: ClusterIP
+  ports:
+  - targetPort: 8080
+    port: 8080
+  selector:
+    env: hydra

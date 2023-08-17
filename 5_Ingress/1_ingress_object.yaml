@@ -1,0 +1,46 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: mcu-all
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: shield.mcu.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: shield-svc
+            port:
+              number: 8080
+  - host: hydra.mcu.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hydra-svc
+            port:
+              number: 8080
+  - host: mcu.com
+    http:
+      paths:
+      - path: /shield
+        pathType: Prefix
+        backend:
+          service:
+            name: shield-svc
+            port:
+              number: 8080
+      - path: /hydra
+        pathType: Prefix
+        backend:
+          service:
+            name: hydra-svc
+            port:
+              number: 8080
